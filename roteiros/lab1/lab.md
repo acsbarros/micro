@@ -1,27 +1,25 @@
-Roteiro da Primeira Prática - Movimentação de Dados e Registradores
-Laboratório 1: Manipulação de Registradores 8086/8088
-Disciplina: Microprocessadores 8086/8088
-Professor: Carlos Barros - UNILAB
-Duração: 2 horas
+# Laboratório 1
 
-🎯 Objetivos da Prática
-Ao final desta prática, o aluno será capaz de:
+**Roteiro da Primeira Prática - Movimentação de Dados e Registradores**
+**Laboratório 1:** Manipulação de Registradores 8086/8088
+**Disciplina:** Microprocessadores 8086/8088
+**Professor:** Carlos Barros - UNILAB
+**Duração:** 2 horas
 
-Compreender a hierarquia e tamanho dos registradores EAX, AX, AH, AL, EBX, BX, BH, BL
+## 🎯 Objetivos da Prática
 
-Realizar movimentação de dados entre registradores e memória
+1) Ao final desta prática, o aluno será capaz de:
+2) Compreender a hierarquia e tamanho dos registradores EAX, AX, AH, AL, EBX, BX, BH, BLRealizar movimentação de dados entre registradores e memória
+3) Identificar problemas de tamanho (truncamento) na movimentação de dados
+4) Entender o conceito de números com e sem sinal
+5) Identificar e explicar situações de overflow
 
-Identificar problemas de tamanho (truncamento) na movimentação de dados
+## 📚 Fundamentos Teóricos
 
-Entender o conceito de números com e sem sinal
-
-Identificar e explicar situações de overflow
-
-📚 Fundamentos Teóricos
-1. Registradores do 8086/8088
+1) Registradores do 8086/8088
 Os registradores do 8086/8088 são de 16 bits, mas os processadores modernos (modo protegido) permitem acesso a versões estendidas de 32 bits (EAX, EBX, etc.).
 
-text
+```text
 EAX (32 bits) - Extended AX
 ├── AX (16 bits) - Acumulador
 │   ├── AH (8 bits) - High byte
@@ -31,36 +29,33 @@ EBX (32 bits) - Extended BX
 ├── BX (16 bits) - Base
 │   ├── BH (8 bits) - High byte
 │   └── BL (8 bits) - Low byte
+```
 
-2. Capacidade de armazenamento
+2) Capacidade de armazenamento
 Registrador	Tamanho	Faixa sem sinal	Faixa com sinal
 AL, BL, AH, BH	8 bits	0 a 255	-128 a +127
 AX, BX	16 bits	0 a 65535	-32768 a +32767
 EAX, EBX	32 bits	0 a 4.294.967.295	-2.147.483.648 a +2.147.483.647
 
-
-3. Flags importantes
+3) Flags importantes
 Flag	Nome	Significado
 CF (Carry Flag)	Flag de transporte	Indica carry/borrow em operações sem sinal
 OF (Overflow Flag)	Flag de overflow	Indica overflow em operações com sinal
 ZF (Zero Flag)	Flag de zero	Indica resultado igual a zero
 SF (Sign Flag)	Flag de sinal	Indica resultado negativo (bit mais significativo = 1)
 
-🛠️ Materiais Necessários
+## 🛠️ Materiais Necessários
 Computador com Linux (ou VM)
-
 NASM instalado
-
 SASM instalado (opcional para debug)
-
 Acesso ao terminal
 
-📝 Exercícios Práticos
+## 📝 Exercícios Práticos
 Exercício 1: Conhecendo os Registradores
 Objetivo: Visualizar como os registradores EAX, AX, AH e AL compartilham o mesmo espaço.
-
 Código: registradores.asm
 
+```assembly
 section .data
     msg1 db 'EAX = ', 0
     msg2 db 'AX = ', 0
@@ -92,6 +87,7 @@ _start:
     mov eax, 1
     xor ebx, ebx
     int 0x80
+```
 
 Tarefa 1: Carregue este código no SASM e use o debugger (F7) para observar:
 
@@ -113,7 +109,7 @@ Exercício 2: Movimentação e Truncamento
 Objetivo: Entender o truncamento ao mover valores de maior para menor tamanho.
 
 Código: truncamento.asm
-
+```assembly
 section .data
     msg_origem db 'Valor original em EAX: 0x1234ABCD', 0xa
     len_orig equ $ - msg_origem
@@ -152,8 +148,9 @@ _start:
     mov eax, 1
     xor ebx, ebx
     int 0x80
+```
 
-    Questões para responder (no relatório):
+Questões para responder (no relatório):
 
 Qual o valor final em DL? Por quê?
 
@@ -171,7 +168,7 @@ Exercício 3: Números com e sem Sinal
 Objetivo: Diferenciar representação com sinal (complemento de 2) e sem sinal.
 
 Código: sinal.asm
-
+```assembly
 section .data
     msg_unsigned db 'Interpretação sem sinal:', 0xa
     len_uns equ $ - msg_unsigned
@@ -217,8 +214,9 @@ _start:
     mov eax, 1
     xor ebx, ebx
     int 0x80
+```
 
-    Questões para responder:
+Questões para responder:
 
 Por que 0xFF é interpretado como -1 quando consideramos sinal?
 
@@ -240,6 +238,7 @@ Objetivo: Identificar situações de overflow em operações com e sem sinal.
 
 Código: overflow.asm
 
+```assembly
 section .data
     msg_overflow db 'Overflow detectado!', 0xa
     len_ovf equ $ - msg_overflow
@@ -288,8 +287,9 @@ _start:
     mov eax, 1
     xor ebx, ebx
     int 0x80
+```
 
-    Questões para responder:
+Questões para responder:
 
 Explique a diferença entre Carry Flag (CF) e Overflow Flag (OF).
 
@@ -303,7 +303,7 @@ Exercício 5: Prática com SASM - Observando Flags
 Objetivo: Usar o debugger do SASM para visualizar flags em tempo real.
 
 Código: flags_sasm.asm (para usar no SASM)
-
+```assembly
 %include "io.inc"
 
 section .data
@@ -340,6 +340,7 @@ CMAIN:
     ret
 
     Procedimento no SASM:
+```
 
 Copie o código acima no SASM
 
@@ -360,7 +361,7 @@ Operação	Valor em AL (hex)	Valor em AL (decimal)	CF	OF	ZF	SF	O que aconteceu?
 0x40 + 0x40	
 
 
-📊 Questões Conceituais
+## 📊 Questões Conceituais
 Responda no relatório:
 
 Tamanho e Capacidade:
@@ -391,7 +392,7 @@ Análise de código:
 mov eax, 0xFFFFFFFF
 add eax, 1
 
-🧪 Desafios Extras (para alunos avançados)
+## 🧪 Desafios Extras (para alunos avançados)
 Desafio 1: Detector de Overflow
 Escreva um programa que recebe dois números (em AL e BL), soma e indica se houve overflow com sinal.
 
@@ -401,7 +402,7 @@ Escreva um programa que converte um número com sinal para sua representação e
 Desafio 3: Máquina de estados das flags
 Crie uma tabela verdade mostrando o estado das flags (CF, OF, ZF, SF) para todas as combinações de soma de dois números de 4 bits.
 
-📝 Formato do Relatório
+## 📝 Formato do Relatório
 
 # Relatório da Primeira Prática - Registradores e Flags
 
@@ -448,7 +449,7 @@ Crie uma tabela verdade mostrando o estado das flags (CF, OF, ZF, SF) para todas
 ## 7. Códigos Fonte
 [Colar todos os códigos desenvolvidos]
 
-✅ Checklist de Verificação
+## ✅ Checklist de Verificação
 Antes de finalizar, verifique se você:
 
 Compilou e executou todos os códigos
@@ -467,14 +468,14 @@ Consegue explicar complemento de 2
 
 Preparou o relatório completo
 
-📚 Referências para Estudo
+## 📚 Referências para Estudo
 x86 Flags - Guia completo
 
 Complemento de 2 - Explicação visual
 
 NASM Tutorial com exemplos
 
-🎯 Rubrica de Avaliação
+## 🎯 Rubrica de Avaliação
 Critério	Peso	Pontuação
 Execução correta dos códigos	20%	/20
 Preenchimento das tabelas	15%	/15
@@ -483,8 +484,8 @@ Relatório completo e organizado	20%	/20
 Participação e discussão	15%	/15
 TOTAL	100%	/100
 
-Boa prática!
-Prof. Carlos Barros - UNILAB
+***Boa prática!***
+**Prof. Carlos Barros - UNILAB**
 
 Este roteiro cobre todos os pontos solicitados:
 ✅ Movimentação em registradores (EAX, AX, AH, AL, EBX, BX, BH, BL)
