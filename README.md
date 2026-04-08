@@ -6,6 +6,7 @@
 Bem-vindo ao repositório da disciplina! Aqui você encontrará materiais, códigos-exemplo e roteiros para os laboratórios de programação em assembly para os microprocessadores 8086/8088.
 
 ## 📁 Estrutura do Repositório
+```text
 .
 ├── exemplos/ # Códigos exemplo vistos em aula
 │ ├── hello.asm
@@ -21,7 +22,7 @@ Bem-vindo ao repositório da disciplina! Aqui você encontrará materiais, códi
 │ ├── lab1_nasm.md
 │ └── lab2_sasm.md
 └── README.md # Este arquivo
-
+```
 
 ## 🛠️ Ferramentas Utilizadas
 
@@ -44,6 +45,7 @@ sudo apt update
 sudo apt install sasm
 
 ```
+
 Windows
 NASM: Baixe do site oficial (https://www.nasm.us/pub/nasm/releasebuilds/) e adicione ao PATH
 
