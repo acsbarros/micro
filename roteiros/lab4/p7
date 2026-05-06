@@ -1,0 +1,36 @@
+extern printf
+extern scanf
+
+section .data
+intFmt: db "%d",0xa,0x0
+msg1: db "e maior",0xa,0x0
+msg2: db "e menor ou igual",0xa,0x0
+
+section .bss
+x resd 1
+section .text
+global main
+main:
+    mov ebp, esp; for correct debugging
+    ;write your code here
+    push x
+    push intFmt
+    call scanf
+    add esp,8
+    
+    
+    
+    mov eax,10
+    cmp eax,dword[x]
+    jg maior
+    push msg2
+    call printf
+    add esp,4 
+    xor eax, eax
+    ret
+    
+maior: 
+    push msg1
+    call printf
+    add esp,4
+    ret
