@@ -1,0 +1,42 @@
+extern printf
+extern scanf
+section .data ; valores inicilizados
+fmtInt: db "%d",0xA,0x0
+msg: db "Digite o valor de x",0xA,0x0
+msgSaida: db "Resultado",0xA,0x0
+
+section .bss ; valores não inicializados
+x resd 1
+y resd 1
+r1 resd 1
+r2 resd 1
+r3 resd 1
+
+section .text ; codigo fonte
+    global main
+main:
+    mov ebp, esp; for correct debugging
+    
+    mov ebx,4
+    mov eax,0
+    
+    .repita:
+    cmp eax, ebx
+    jge exit
+    
+    push eax           ; salva eax na pilha
+    push eax
+    push fmtInt
+    call printf
+    add esp, 8
+    pop eax            ; restaura eax (agora correto!)
+    
+    inc eax
+    jmp .repita
+  
+exit:    
+    xor eax,eax; return 0
+    ret    
+    ; 
+
+

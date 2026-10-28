@@ -1,0 +1,90 @@
+extern printf
+extern scanf
+
+section .data
+msg: db "Informe o valor",0xa,0x0
+fmtInt: db "%d",0xa,0x0
+msgMe: db "menor",0xa,0x0
+msgMa: db "maior",0xa,0x0
+
+section .bss
+x resd 1
+xquadrado resd 1
+x5 resd 1
+y resd 1
+global main
+section .text
+main:
+    mov ebp, esp; for correct debugging 
+    ; digite seu codigo
+    ;printf(msg)
+    push msg
+    call printf
+    add esp,4
+    ;scanf("%d",&x)
+    push x
+    push fmtInt
+    call scanf
+    add esp,8 
+    ; x²
+    mov eax,dword[x]
+    mul eax,eax
+    mov dword[xquadrado],eax
+    ;printf("%d",xquadrado)
+    push dword[xquadrado]
+    push fmtInt
+    call printf
+    add esp,8 
+    
+    mov eax,dword[x]
+    mul eax,5
+    mov dword[x5],eax   
+    
+    push dword[x5]
+    push fmtInt
+    call printf
+    add esp,8 
+    
+    mov eax,dword[xquadrado]
+    sub eax,dword[x5]
+    add eax,3
+    mov dword[y],eax
+    
+    push dword[y]
+    push fmtInt
+    call printf
+    add esp,8 
+    
+    mov eax,dword[y]
+    mov ebx,5
+    div ebx
+    
+    mov dword[y],eax
+    push dword[y]
+    push fmtInt
+    call printf
+    add esp,8    
+   
+    mov eax,5
+    cmp dword[y],eax
+    jl .maior
+    push msgMe
+    call printf
+    add esp,4
+    jmp .exit    
+    .maior:
+     push msgMa
+     call printf
+     add esp,4
+     ret
+     
+    .exit:
+    xor eax,eax;
+    
+     
+                
+    
+     
+    xor eax,eax; mov eax,0
+    
+    

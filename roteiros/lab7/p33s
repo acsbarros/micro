@@ -1,0 +1,30 @@
+extern printf
+extern scanf
+
+section .data
+msgMenor: db "menor",0xa,0x0
+msgMaior: db "maior",0xa,0x0
+nome: db "carlos",0xa,0x0
+section .bss
+s resd 1
+i resd 1
+global main
+section .text
+main:
+    mov ebp, esp; for correct debugging
+
+    mov ecx,3
+    .for: 
+    push ecx
+    
+    push nome
+    call printf
+    add esp,4
+    
+    pop ecx
+    loop .for   
+    
+    fim:
+ xor eax,eax
+
+
